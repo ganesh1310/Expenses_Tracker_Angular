@@ -1,0 +1,27 @@
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background: #f5f6fa;">
+    <div style="background: #fff; padding: 2rem 2.5rem; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); min-width: 350px;">
+        <h2 style="text-align: center; margin-bottom: 1.5rem;">Sign Up</h2>
+        <form [formGroup]="userForm" (ngSubmit)="signUp()">
+            <div style="margin-bottom: 1rem;">
+                <input formControlName="userName" type="text" placeholder="Full Name" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input formControlName="contact" type="text" placeholder="Contact" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input formControlName="email" type="email" placeholder="Email" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+            <div style="margin-bottom: 1rem;">
+                <input formControlName="password" type="password" placeholder="Password" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+            <div style="margin-bottom: 1.5rem;">
+                <input formControlName="profession" type="text" placeholder="Profession" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: 1px solid #ccc;">
+            </div>
+            <button type="submit" [disabled]="userForm.invalid" style="width: 100%; padding: 0.6rem; background: #1976d2; color: #fff; border: none; border-radius: 5px; font-size: 1rem;">Sign Up</button>
+        </form>
+        <div  style="text-align: center; margin-top: 1.5rem; font-size: 0.95rem;">
+            Already registered?
+            <button class="backToLogIn" (click)="goToLoginPage()">Go to Login</button>
+        </div>
+    </div>
+</div>
