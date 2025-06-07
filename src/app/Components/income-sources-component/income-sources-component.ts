@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { App } from '../../app';
 import { CommonModule } from '@angular/common';
 import {
   FormControl,
@@ -12,7 +11,7 @@ import { CommonServices } from '../../Services/common-services';
 
 @Component({
   selector: 'app-income-sources-component',
-  imports: [App, CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './income-sources-component.html',
   styleUrl: './income-sources-component.scss',
 })

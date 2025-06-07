@@ -25,6 +25,7 @@ export class App {
 
   ngOnInit() {
     this.commonServices.getTotalAmountAdded();
+    this.commonServices.getAllExpenses();
   }
 
   goToIncomePage(){

@@ -1,1 +1,51 @@
-<p>expenses-tracker-component works!</p>
+<div class="expenses-tracker-container">
+    <!-- Left Side: Expense Entry Form -->
+    <div class="expense-form">
+        <h2>Add Expense</h2>
+        <form [formGroup]="expensesForm" (ngSubmit)="addToExpenses()">
+            <div class="form-group">
+                <label for="amount">Amount Paid</label>
+                <input formControlName="amountPaid" type="number" id="amount" name="amount" placeholder="Enter amount" required />
+            </div>
+            <div class="form-group">
+                <label for="paidFor">Paid For</label>
+                <input formControlName="paidFor" type="text" id="paidFor" name="paidFor" placeholder="Expense description" required />
+            </div>
+            <div class="form-group">
+                <label for="paidDate">Paid Date</label>
+                <input formControlName="paidDate" type="date" id="paidDate" name="paidDate" required />
+            </div>
+            <div class="form-group">
+                <label for="billUpload">Bill Upload</label>
+                <input type="file" id="billUpload" name="billUpload" accept="image/*,application/pdf" />
+            </div>
+            <button type="submit" [disabled]="expensesForm.invalid" class="add-expense-btn">Add to Expenses</button>
+        </form>
+    </div>
+
+    <!-- Right Side: Expenses Table -->
+    <div class="expenses-table">
+        <h2>Expenses List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sr. No</th>
+                    <th>Expenses For</th>
+                    <th>Amount Paid</th>
+                    <th>Paid Date</th>
+                    <th>View Bill</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Expense rows will go here -->
+                <tr *ngFor="let data of expensesList[0] ; let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{data.paidFor}}</td>
+                    <td>{{data.amountPaid}}</td>
+                    <td>{{data.paidDate}}</td>
+                    <td><button class="view-bill-btn">View</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

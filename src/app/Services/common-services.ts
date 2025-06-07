@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { addDoc } from 'firebase/firestore';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +17,9 @@ export class CommonServices {
 
   private totalAmoutnSubject = new BehaviorSubject<string>('0.00');
   totalAmount = this.totalAmoutnSubject.asObservable();
+
+  private totalExpensesSubjet = new BehaviorSubject<string>('0.00');
+  totalExpenses = this.totalExpensesSubjet.asObservable();
 
   constructor(private fireBase: Firestore, private router: Router) {
     this.getRegisteredUser().subscribe((users: any) => {
@@ -76,6 +79,21 @@ export class CommonServices {
     return collectionData(paymentsCollection, { idField: 'id' })
   }
 
+  async addExpenses(expenseData: any) {
+    const expensesCollection = collection(this.fireBase, 'Expenses');
+    try {
+      await addDoc(expensesCollection, expenseData);
+      console.log('Expense added successfully');
+    } catch (error) {
+      console.error('Error adding expense:', error);
+    }
+  }
+
+  getAllExpenses(){
+    const getExpensesCollection = collection(this.fireBase, 'Expenses');
+    return collectionData(getExpensesCollection, { idField: 'id' })
+  }
+
   getTotalAmountAdded(){
     const paymentsCollection = collection(this.fireBase, 'Payments');
     return collectionData(paymentsCollection, { idField: 'id' }).subscribe((payments: any) => {
@@ -89,4 +107,19 @@ export class CommonServices {
       console.log('Total Amount:', total.toFixed(2));
     });
   }
+
+  calculateTotalExpenses() {
+    const expensesCollection = collection(this.fireBase , 'Expenses');
+    return collectionData(expensesCollection , {idField: 'id'}).subscribe((expemses:any)=>{
+      let total = 0;
+      expemses.forEach((amount:any)=>{
+        if(amount.amountPaid){
+          total += parseFloat(amount.amountPaid);
+        }
+      });
+      this.totalExpensesSubjet.next(total.toFixed(2));
+      console.log('Total Expenses:' , total.toFixed(2));
+    })
+  }
+
 }
