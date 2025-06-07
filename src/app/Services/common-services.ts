@@ -12,15 +12,27 @@ export class CommonServices {
   private isLoggedUserSubject = new BehaviorSubject<boolean>(false);
   isUserLoggedIn = this.isLoggedUserSubject.asObservable();
 
-  constructor(private fireBase: Firestore, private router: Router) {}
+  private userNameSubject = new BehaviorSubject<string>('');
+  userName = this.userNameSubject.asObservable();
 
-  getRegisteredUsers() {
-    const usersCollection = collection(this.fireBase, 'Users');
-    return collectionData(usersCollection, { idField: 'id' }).subscribe(
-      (users) => {
-        console.log('Registered Users:', users);
+  private totalAmoutnSubject = new BehaviorSubject<string>('0.00');
+  totalAmount = this.totalAmoutnSubject.asObservable();
+
+  constructor(private fireBase: Firestore, private router: Router) {
+    this.getRegisteredUser().subscribe((users: any) => {
+      if (users.length > 0) {
+        const user = users[0]; // Assuming the first user is the one we want
+        this.userNameSubject.next(user.userName);
+        console.log('User Name:', user.userName);
+      } else {
+        console.log('No users found');
       }
-    );
+    });
+  }
+
+  getRegisteredUser() {
+    const usersCollection = collection(this.fireBase, 'Users');
+    return collectionData(usersCollection, { idField: 'id' });
   }
 
   addUser(userData: any) {
@@ -48,5 +60,33 @@ export class CommonServices {
         }
       }
     );
+  }
+
+  addPayment(paymentData: any) {
+    const paymentsCollection = collection(this.fireBase, 'Payments');
+    return addDoc(paymentsCollection, paymentData).then(() => {
+      console.log('Payment added successfully');
+    }).catch((error) => {
+      console.error('Error adding payment:', error);
+    });
+  }
+
+  getPaymentRecords() {
+    const paymentsCollection = collection(this.fireBase, 'Payments');
+    return collectionData(paymentsCollection, { idField: 'id' })
+  }
+
+  getTotalAmountAdded(){
+    const paymentsCollection = collection(this.fireBase, 'Payments');
+    return collectionData(paymentsCollection, { idField: 'id' }).subscribe((payments: any) => {
+      let total = 0;
+      payments.forEach((payment: any) => {
+        if (payment.amount) {
+          total += parseFloat(payment.amount);
+        }
+      });
+      this.totalAmoutnSubject.next(total.toFixed(2));
+      console.log('Total Amount:', total.toFixed(2));
+    });
   }
 }

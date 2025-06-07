@@ -1,0 +1,47 @@
+    .dropdown-container {
+        margin-bottom: 20px;
+    }
+
+    .income-form {
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 18px;
+        margin-bottom: 20px;
+        max-width: 400px;
+        background: #f9f9f9;
+    }
+
+    .income-form h3 {
+        margin-top: 0;
+        color: #2c3e50;
+    }
+
+    .income-form label {
+        display: block;
+        margin-top: 10px;
+        font-weight: 500;
+    }
+
+    .income-form input {
+        width: 100%;
+        padding: 7px;
+        margin-top: 4px;
+        border-radius: 4px;
+        border: 1px solid #bbb;
+        box-sizing: border-box;
+    }
+
+    .add-btn {
+        margin-top: 15px;
+        padding: 8px 18px;
+        background: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .add-btn:hover {
+        background: #217dbb;
+    }

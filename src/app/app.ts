@@ -23,6 +23,10 @@ export class App {
     })
   }
 
+  ngOnInit() {
+    this.commonServices.getTotalAmountAdded();
+  }
+
   goToIncomePage(){
     this.router.navigate(['/income']);
   }

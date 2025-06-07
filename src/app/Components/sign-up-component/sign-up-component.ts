@@ -26,7 +26,6 @@ export class SignUpComponent {
 
   goToLoginPage() {
     this.router.navigate(['/login']);
-    this.commonServices.getRegisteredUsers();
   }
 
   signUp(){
