@@ -23,6 +23,7 @@ export class LoginComponent {
   login(){
     if(this.loginForm.valid){
       this.commonServices.loginUser(this.loginForm.value);
+      this.commonServices.isLoggedUserSubject.next(true);
       this.loginForm.reset();
     }else{
       console.error('Form is invalid');

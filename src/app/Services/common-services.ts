@@ -9,16 +9,16 @@ import { BehaviorSubject, map } from 'rxjs';
 })
 export class CommonServices {
 
-  private isLoggedUserSubject = new BehaviorSubject<boolean>(false);
+  public isLoggedUserSubject = new BehaviorSubject<boolean>(false);
   isUserLoggedIn = this.isLoggedUserSubject.asObservable();
 
-  private userNameSubject = new BehaviorSubject<string>('');
+  public userNameSubject = new BehaviorSubject<string>('');
   userName = this.userNameSubject.asObservable();
 
-  private totalAmoutnSubject = new BehaviorSubject<string>('0.00');
+  public totalAmoutnSubject = new BehaviorSubject<string>('0.00');
   totalAmount = this.totalAmoutnSubject.asObservable();
 
-  private totalExpensesSubjet = new BehaviorSubject<string>('0.00');
+  public totalExpensesSubjet = new BehaviorSubject<string>('0.00');
   totalExpenses = this.totalExpensesSubjet.asObservable();
 
   constructor(private fireBase: Firestore, private router: Router) {

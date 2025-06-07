@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonServices } from './Services/common-services';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet , CommonModule],
+  imports: [RouterOutlet , CommonModule, RouterLink , RouterLinkActive],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App {
   protected title = 'Expenses_Tracker';
   isLogin: boolean = false;
+  userName: string = '';
+  selectedButton: string = '';
 
   constructor(
     private router: Router,
@@ -20,23 +22,33 @@ export class App {
     this.commonServices.isUserLoggedIn.subscribe((status:any)=>{
       this.isLogin = status;
       console.log('User login status:', this.isLogin);
-    })
+      //store to local storage
+      localStorage.setItem('isUserLoggedIn', JSON.stringify(this.isLogin));
+    });
+
+    this.commonServices.userName.subscribe((name:any)=>{
+      this.userName = name;
+    });
   }
 
   ngOnInit() {
     this.commonServices.getTotalAmountAdded();
     this.commonServices.getAllExpenses();
+    this.commonServices.calculateTotalExpenses();
   }
 
-  goToIncomePage(){
+  goToIncomePage(source: string){
+    this.selectedButton = source;
     this.router.navigate(['/income']);
   }
   
-  goToExpensesPage(){
+  goToExpensesPage(source: string){
+    this.selectedButton = source;
     this.router.navigate(['/expenses']);
   }
 
-  gotoDashboardPage(){
+  gotoDashboardPage(source: string){
+    this.selectedButton = source;
     this.router.navigate(['/dashboard']);
   }
 
@@ -47,6 +59,7 @@ export class App {
   logout(){
     this.isLogin = false;
     console.log('User logged out');
+    this.commonServices.isLoggedUserSubject.next(false);
     this.router.navigate(['/login']);
   }
 }

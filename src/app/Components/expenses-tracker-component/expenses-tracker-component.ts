@@ -13,7 +13,13 @@ export class ExpensesTrackerComponent {
 
   expensesList : any[] = [];
   constructor(private commonService : CommonServices){
-    this.getExpensesHistory();
+  }
+  
+  ngOnInit(){
+    this.commonService.getAllExpenses().subscribe((exp : any)=>{
+      this.expensesList.push(exp);
+      console.log(this.expensesList);
+    })
   }
 
   expensesForm = new FormGroup({
@@ -27,14 +33,6 @@ export class ExpensesTrackerComponent {
       const expensesData = this.expensesForm.value;
       this.commonService.addExpenses(expensesData);
       this.expensesForm.reset();
-      this.getExpensesHistory();
     }
-  }
-
-  getExpensesHistory(){
-    this.commonService.getAllExpenses().subscribe((exp : any)=>{
-      this.expensesList.push(exp);
-      console.log(this.expensesList);
-    })
   }
 }
