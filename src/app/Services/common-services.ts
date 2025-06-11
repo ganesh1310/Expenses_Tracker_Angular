@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
+import { ref , Storage, uploadBytes , getDownloadURL} from '@angular/fire/storage';
 import { Router } from '@angular/router';
-import { addDoc } from 'firebase/firestore';
+import { addDoc, setDoc } from 'firebase/firestore';
 import { BehaviorSubject, map } from 'rxjs';
 
 @Injectable({
@@ -21,7 +22,7 @@ export class CommonServices {
   public totalExpensesSubjet = new BehaviorSubject<string>('0.00');
   totalExpenses = this.totalExpensesSubjet.asObservable();
 
-  constructor(private fireBase: Firestore, private router: Router) {
+  constructor(private fireBase: Firestore, private router: Router , private storage: Storage) {
     this.getRegisteredUser().subscribe((users: any) => {
       if (users.length > 0) {
         const user = users[0]; // Assuming the first user is the one we want
@@ -113,13 +114,22 @@ export class CommonServices {
     return collectionData(expensesCollection , {idField: 'id'}).subscribe((expemses:any)=>{
       let total = 0;
       expemses.forEach((amount:any)=>{
-        if(amount.amountPaid){
-          total += parseFloat(amount.amountPaid);
+        if(amount.paidAmount){
+          total += parseFloat(amount.paidAmount);
         }
       });
       this.totalExpensesSubjet.next(total.toFixed(2));
       console.log('Total Expenses:' , total.toFixed(2));
     })
+  }
+
+  deleteExpneses(expenseId: string){
+    const expenseDocRef = doc(this.fireBase, 'Expenses', expenseId);
+    deleteDoc(expenseDocRef).then(() => {
+      console.log('Expense deleted successfully');
+    }).catch((error) => {
+      console.error('Error deleting expense:', error);
+    });
   }
 
 }

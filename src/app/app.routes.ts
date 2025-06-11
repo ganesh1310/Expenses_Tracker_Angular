@@ -8,10 +8,10 @@ import { authGuard } from '../AuthGuards/auth-guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/SignUp', pathMatch: 'full'},
-    { path: 'dashboard', component: DashboadComponent , canActivate: [authGuard] },
+    { path: 'dashboard', component: DashboadComponent  },//, canActivate: [authGuard]
     { path: 'SignUp', component: SignUpComponent},
-    { path: 'income', component: IncomeSourcesComponent, canActivate: [authGuard] },
-    { path: 'expenses', component: ExpensesTrackerComponent, canActivate: [authGuard] },
+    { path: 'income', component: IncomeSourcesComponent }, // canActivate: [authGuard]
+    { path: 'expenses', component: ExpensesTrackerComponent},  //canActivate: [authGuard]
     { path: 'login', component: LoginComponent },
     {path: '**', redirectTo: '/SignUp'}
 ];

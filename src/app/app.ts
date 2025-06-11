@@ -22,9 +22,7 @@ export class App {
     this.commonServices.isUserLoggedIn.subscribe((status:any)=>{
       this.isLogin = status;
       console.log('User login status:', this.isLogin);
-      //store to local storage
-      localStorage.setItem('isUserLoggedIn', JSON.stringify(this.isLogin));
-    });
+      });
 
     this.commonServices.userName.subscribe((name:any)=>{
       this.userName = name;

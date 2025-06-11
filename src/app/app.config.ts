@@ -6,6 +6,9 @@ import { provideClientHydration, withEventReplay } from '@angular/platform-brows
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage } from '@angular/fire/storage';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCr4eB1e8qNxx4qA2iK0K-Y4ju0uMS1Q20",
@@ -25,6 +28,9 @@ export const appConfig: ApplicationConfig = {
 
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
-    provideFirestore(() => getFirestore())
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
+    AngularFireStorage,
+    
   ]
 };
