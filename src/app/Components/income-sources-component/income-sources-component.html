@@ -1,57 +1,237 @@
-<div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 40px; padding: 40px; min-height: 80vh; background: #f7f9fb;">
+<div
+    style="display: flex; justify-content: space-around; align-items: flex-start; gap: 40px; padding: 40px; min-height: 80vh; background: #f7f9fb;">
+
+    <div class="top-action-buttons" style="display: flex; gap: 12px; margin-bottom: 24px;">
+        <button type="button" (click)="viewSection('Add to Wallet')" class="action-btn">Add to Wallet</button>
+        <button type="button" (click)="viewSection('View Wallet')" class="action-btn">View Wallet</button>
+        <button type="button" (click)="viewSection('Recent Transactions')" class="action-btn">Recent
+            Transactions</button>
+        <button type="button" (click)="viewSection('Calculate Total Income')" class="action-btn">Calculate Total
+            Income</button>
+    </div>
+
     <!-- Payment Addition Form -->
-    <div style="flex: 1; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px; max-width: 420px;">
+    <div *ngIf="sectionToShow === 'Add to Wallet'"
+        style="flex: 1; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px; max-width: 420px;">
         <h2 style="margin-bottom: 24px; color: #2d3748;">Add Income</h2>
         <form [formGroup]="addPaymetForm" (ngSubmit)="addPayment()">
             <div style="margin-bottom: 18px;">
                 <label for="incomeType" style="display: block; margin-bottom: 6px; color: #4a5568;">Income Type</label>
-                <select formControlName="incomeType" id="incomeType" name="incomeType" style="width: 105%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
+                <select formControlName="incomeType" id="incomeType" name="incomeType"
+                    style="width: 105%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
                     <option value="" disabled selected>Select income type</option>
                     <option *ngFor="let type of incomeTypes" [value]="type">{{ type }}</option>
                 </select>
             </div>
             <div style="margin-bottom: 18px;">
-                <label for="amountToAdd" style="display: block; margin-bottom: 6px; color: #4a5568;">Amount to Add</label>
-                <input formControlName="amount" type="number" id="amountToAdd" name="amountToAdd" placeholder="e.g. 5000" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
+                <label for="amountToAdd" style="display: block; margin-bottom: 6px; color: #4a5568;">Amount to
+                    Add</label>
+                <input formControlName="amount" type="number" id="amountToAdd" name="amountToAdd"
+                    placeholder="e.g. 5000"
+                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
             </div>
             <div style="margin-bottom: 18px;">
                 <label for="remarks" style="display: block; margin-bottom: 6px; color: #4a5568;">Remarks</label>
-                <input formControlName="remarks" type="text" id="remarks" name="remarks" placeholder="Enter remarks (optional)" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
+                <input formControlName="remarks" type="text" id="remarks" name="remarks"
+                    placeholder="Enter remarks (optional)"
+                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
             </div>
             <div style="margin-bottom: 18px;">
-                <label  for="updatedDate" style="display: block; margin-bottom: 6px; color: #4a5568;">Date</label>
-                <input formControlName="date" type="date" id="updatedDate" name="updatedDate" style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
+                <label for="updatedDate" style="display: block; margin-bottom: 6px; color: #4a5568;">Date</label>
+                <input formControlName="date" type="date" id="updatedDate" name="updatedDate"
+                    style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px;">
             </div>
-            <button type="submit" [disabled]="addPaymetForm.invalid" style="width: 100%; padding: 12px; background: #3182ce; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
+            <button type="submit" [disabled]="addPaymetForm.invalid"
+                style="width: 100%; padding: 12px; background: #3182ce; color: #fff; border: none; border-radius: 6px; font-weight: 600; cursor: pointer;">
                 Add Amount
             </button>
         </form>
     </div>
 
     <!-- My Wallet Info -->
-    <div style="flex: 1; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px; max-width: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div *ngIf="sectionToShow === 'View Wallet'"
+        style="flex: 1; background: #fff; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); padding: 32px; max-width: 420px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
         <h2 style="margin-bottom: 24px; color: #2d3748;">My Wallet</h2>
         <div style="width: 100%;">
             <div style="display: flex; align-items: center; margin-bottom: 22px;">
-                <label for="userName" style="min-width: 110px; margin-right: 12px; color: #4a5568; font-weight: 500;">User Name</label>
-                <input
-                    id="userName"
-                    type="text"
-                    [ngModel]="userName"
-                    disabled
-                    style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 6px; background: #f1f5f9; color: #2d3748; font-size: 1rem; font-weight: 500;"
-                >
+                <label for="userName"
+                    style="min-width: 110px; margin-right: 12px; color: #4a5568; font-weight: 500;">User Name</label>
+                <input id="userName" type="text" [ngModel]="userName" disabled
+                    style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 6px; background: #f1f5f9; color: #2d3748; font-size: 1rem; font-weight: 500;">
             </div>
             <div style="display: flex; align-items: center; margin-bottom: 22px;">
-                <label for="totalAmount" style="min-width: 110px; margin-right: 12px; color: #4a5568; font-weight: 500;">Total Amount</label>
-                <input
-                    id="totalAmount"
-                    type="number"
-                    [ngModel]="totalAmount"
-                    disabled
-                    style="flex: 1; padding: 10px 12px; border: 1px solid #cbd5e0; border-radius: 6px; background: #f1f5f9; color: #2d3748; font-size: 1rem; font-weight: 500;"
-                >
-            </div>  
+                <label for="totalAmount"
+                    style="min-width: 110px; margin-right: 12px; color: #4a5568; font-weight: 500;">Total Amount</label>
+                <input id="totalAmount" [type]="isPinVerified ? 'text' : 'password'" [ngModel]="totalAmount" disabled
+                    [style.flex]="'1'" [style.padding]="'10px 12px'" [style.border]="'1px solid #cbd5e0'"
+                    [style.border-radius]="'6px'" [style.background]="'#f1f5f9'" [style.color]="'#2d3748'"
+                    [style.font-size]="'1rem'" [style.font-weight]="'500'"
+                    [style.letter-spacing]="isPinVerified ? 'normal' : '2px'">
+
+                <button type="button" (click)="openPinPopup()"
+                    style="background: none; border: none; margin-left: 8px; cursor: pointer;">
+                    <span class="material-icons" style="font-size: 22px; color: #3182ce;">visibility</span>
+                </button>
+            </div>
+
+            <!-- PIN Popup -->
+            <div *ngIf="showPinPopup"
+                style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                <div
+                    style="background: #fff; padding: 32px 24px; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); min-width: 320px;">
+                    <h3 style="margin-bottom: 18px; color: #2d3748;">Enter PIN to View Amount</h3>
+                    <input type="password" [(ngModel)]="enteredPin" maxlength="6"
+                        style="width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; margin-bottom: 18px;">
+                    <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                        <button type="button" (click)="closePinPopup()"
+                            style="padding: 8px 16px; background: #e2e8f0; border: none; border-radius: 6px; color: #2d3748; font-weight: 500;">Cancel</button>
+                        <button type="button" (click)="verifyPin()"
+                            style="padding: 8px 16px; background: #3182ce; color: #fff; border: none; border-radius: 6px; font-weight: 600;">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Recent Transactions -->
+    <div *ngIf="sectionToShow === 'Recent Transactions'">
+        <table
+            style="border-collapse: collapse; width: 600px; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.07); overflow: hidden;">
+            <thead style="background: #3182ce;">
+                <tr>
+                    <th style="padding: 14px 18px; color: #fff; font-weight: 600; text-align: left;">Income Type
+                        <select (change)="filterByCategory($event)"
+                            style="margin-left:8px; padding:2px 6px; border-radius:4px; border:1px solid #ccc;">
+                            <option value="">All</option>
+                            <option value="Salary">Salary</option>
+                            <option value="Business">Business</option>
+                            <option value="Rental">Rental</option>
+                            <option value="Investment">Investment</option>
+                        </select>
+                    </th>
+                    <th style="padding: 14px 18px; color: #fff; font-weight: 600; text-align: left;">Amount</th>
+                    <th style="padding: 14px 18px; color: #fff; font-weight: 600; text-align: left;">Remarks</th>
+                    <th style="padding: 14px 18px; color: #fff; font-weight: 600; text-align: left;">Added Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let transaction of filteredTransactions">
+                    <td style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; color: #2d3748;">{{
+                        transaction.incomeType }}</td>
+                    <td style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; color: #2d3748;">₹{{
+                        transaction.amount }}</td>
+                    <td style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; color: #2d3748;">{{
+                        transaction.remarks || '-' }}</td>
+                    <td style="padding: 12px 18px; border-bottom: 1px solid #e2e8f0; color: #2d3748;">{{
+                        transaction.date | date:'mediumDate' }}</td>
+                </tr>
+                <tr *ngIf="!recentTransactions || recentTransactions.length === 0">
+                    <td colspan="4" style="padding: 18px; text-align: center; color: #a0aec0;">No transactions found.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Calculate total income -->
+    <div *ngIf="sectionToShow === 'Calculate Total Income'">
+        <h2>Custom Income Calculator</h2>
+        <form class="calculator-form">
+            <div class="form-row">
+                <label for="frequency">Select Frequency</label>
+                <select [(ngModel)]="customFrequency" name="frequency" id="frequency" required>
+                    <option value="" disabled selected>Select frequency</option>
+                    <option value="Daily">Daily</option>
+                    <option value="Weekly">Weekly</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="category">Select Category</label>
+                <select [(ngModel)]="customCategory" name="category" id="category" required>
+                    <option value="" disabled selected>Select category</option>
+                    <option value="Salary">Salary</option>
+                    <option value="Business">Business</option>
+                    <option value="Rental">Rental</option>
+                    <option value="Investment">Investment</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <button type="submit" (click)="calculateCustomExpenses(customFrequency , customCategory)"
+                    [disabled]="!customFrequency || !customCategory" class="calculate-btn">Calculate</button>
+            </div>
+            <div class="form-row">
+                <label for="totalExpenses">Total Expenses</label>
+                <input id="totalExpenses" type="text" [value]="totalIncome" disabled class="total-expenses-input" />
+            </div>
+        </form>
+    </div>
+
+    <style>
+        .custom-expenses-calculator {
+            margin-top: 32px;
+            padding: 24px 32px;
+            background: #f7f9fa;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            max-width: 420px;
+        }
+
+        .custom-expenses-calculator h2 {
+            margin-bottom: 20px;
+            color: #2d3a4b;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .calculator-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .form-row {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .calculator-form label {
+            font-weight: 500;
+            color: #3a4a5b;
+        }
+
+        .calculator-form select,
+        .total-expenses-input {
+            padding: 8px 10px;
+            border-radius: 6px;
+            border: 1px solid #cfd8dc;
+            font-size: 1rem;
+            background: #fff;
+        }
+
+        .calculate-btn {
+            background: #1976d2;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 0;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .calculate-btn:disabled {
+            background: #b0bec5;
+            cursor: not-allowed;
+        }
+
+        .total-expenses-input:disabled {
+            background: #e3e8ee;
+            color: #455a64;
+            font-weight: 600;
+        }
+    </style>
 </div>

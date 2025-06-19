@@ -7,7 +7,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 
 
 const firebaseConfig = {
@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    AngularFireStorage,
-    
+    { provide: FIREBASE_OPTIONS, useValue: firebaseConfig }
   ]
 };
+ 

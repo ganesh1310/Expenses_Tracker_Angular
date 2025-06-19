@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Firestore, collection, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
-import { ref , Storage, uploadBytes , getDownloadURL} from '@angular/fire/storage';
 import { Router } from '@angular/router';
 import { addDoc, setDoc } from 'firebase/firestore';
 import { BehaviorSubject, map } from 'rxjs';
@@ -22,7 +22,9 @@ export class CommonServices {
   public totalExpensesSubjet = new BehaviorSubject<string>('0.00');
   totalExpenses = this.totalExpensesSubjet.asObservable();
 
-  constructor(private fireBase: Firestore, private router: Router , private storage: Storage) {
+  recentTransactions: any[] = [];
+
+  constructor(private fireBase: Firestore, private router: Router , private storage: AngularFireStorage) {
     this.getRegisteredUser().subscribe((users: any) => {
       if (users.length > 0) {
         const user = users[0]; // Assuming the first user is the one we want
